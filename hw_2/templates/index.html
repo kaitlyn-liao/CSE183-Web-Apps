@@ -1,0 +1,28 @@
+[[extend 'layout.html']]
+
+<div class="section">
+   <!-- Put the table here -->
+   <section class="section">
+      <h1 class="title">Birds</h1>
+      <table class="table is-fullwidth is-striped">
+         <thead>
+         </thead>
+         <tbody>
+            <tr>
+              [[for h in theaders:]]
+                  <td class="has-text-weight-bold">[[=h]]</td>
+               [[pass]]
+            </tr>
+
+
+            [[for r in rows:]]
+               <tr>
+               [[for h in headers:]]
+                  <td>[[=r[h] ]]</td>
+               [[pass]]
+               </tr>
+            [[pass]]
+         </tbody>
+      </table>
+   </section>
+</div>
