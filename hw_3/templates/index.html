@@ -13,6 +13,7 @@
 
    <div class="container">
       <table class="table is-striped is-fullwidth">
+        [[print(rows)]]
         <tr>
           <th>Bird</th>
           <th>Weight</th>
@@ -35,6 +36,8 @@
             <a class="button" href="[[=URL('edit', row.id)]]">
               <span class="icon"><i class="fa fa-fw fa-pencil"></i></span> <span>Edit</span>
             </a>
+            [[print(row.id)]]
+            
           </td>
           <td>
             <a class="button" href="[[=URL('inc', row.id, signer=url_signer)]]">
