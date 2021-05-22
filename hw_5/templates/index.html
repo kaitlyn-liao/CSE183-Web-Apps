@@ -6,16 +6,83 @@
 }
 </style>
 
-
 <div class="section" id="vue-target" v-cloak>
-  <!-- Put here your Vue.js template -->
+  <h1 class="title">Postlandia</h1>
+  
+  <!-- add post -->
+  <div v-if="add_mode" class="block">
+    <div class="form">
+
+      <!-- This looks like a form, but is not.  We just need the inputs. -->
+      <div class="field">
+        <div class="control">
+          <textarea v-model="add_post_content" class="textarea" 
+          placeholder="Enter new post here"></textarea>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input type="submit" @click="add_post" value="Add" class="button is-primary">
+          <input type="submit" @click="set_add_status(false); set_is_hidden(true);" value="Cancel" class="button is-warning">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- display posts -->
+  <div>
+    <button class="button is-primary" v-if="is_hidden" @click="set_add_status(true); set_is_hidden(false);" >
+      <i class="fa fa-plus fa-fw"></i>
+    </button>
+
+    <!-- list posts -->
+    <div v-for="r in rows.slice().reverse()">
+      <br>
+      <div class="notification">
+        <p>{{r.post_content}}</p>
+        <p class="has-text-grey">{{r.name}}</p>
+        <br>
+        <div class="columns is-mobile">
+          <div class="column">
+            <span style="color: hsl(204, 86%, 53%);" @mouseout="thumb_out(r._idx)">
+
+              <span style="font-size: x-large;" @mouseover="thumb_over(r._idx, 'up_thumb')">
+                <i v-if="r.up_thumb_displayed == 1" @click="set_thumbs(r._idx, 'up_thumb')" class="fa fa-flip-horizontal fa-thumbs-up"></i>
+                <i v-if="r.up_thumb_displayed == 0" @click="set_thumbs(r._idx, 'up_thumb')" class="fa fa-flip-horizontal fa-thumbs-o-up" ></i>
+              </span>
+
+              <span style="font-size: x-large;" @mouseover="thumb_over(r._idx, 'down_thumb')">
+                <i v-if="r.down_thumb_displayed == 1" @click="set_thumbs(r._idx, 'down_thumb')" class="fa fa-thumbs-down"></i> 
+                <i v-if="r.down_thumb_displayed == 0" @click="set_thumbs(r._idx, 'down_thumb')" class="fa fa-thumbs-o-down"></i>
+              </span>
+
+              <span v-if="r.up_thumb_displayed == 1 && r.likers != '' ">Liked by {{r.likers}} </span>
+              <span v-if="r.down_thumb_displayed == 1 && r.dislikers != '' ">Disliked by {{r.dislikers}} </span>
+
+            </span>
+          </div>
+          <div class="column has-text-right">
+            <!-- if post email matches current email -->
+            <div v-if="r.user_email == cur_email">
+              <i @click="delete_post(r._idx)" class="fa fa-trash" style="font-size: x-large; color: hsl(348, 100%, 61%);"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
 <script>
-  let my_callback_url = "[[=XML(my_callback_url)]]";
+  let load_posts_url = "[[=XML(load_posts_url)]]";
+  let add_post_url = "[[=XML(add_post_url)]]";
+  let delete_post_url = "[[=XML(delete_post_url)]]";
+  let set_thumbs_url = "[[=XML(set_thumbs_url)]]";
+  let get_thumbs_url = "[[=XML(get_thumbs_url)]]";
 </script>
 <script src="js/index.js"></script>
 [[end]]

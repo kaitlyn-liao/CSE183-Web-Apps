@@ -1,0 +1,303 @@
+timestamp: 2021-05-13T00:00:49.362922
+CREATE TABLE "py4web_session"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "rkey" CHAR(512),
+    "rvalue" TEXT,
+    "expiration" INTEGER,
+    "created_on" TIMESTAMP,
+    "expires_on" TIMESTAMP
+);
+success!
+timestamp: 2021-05-13T00:00:49.369143
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "email" CHAR(512) UNIQUE,
+    "password" CHAR(512),
+    "first_name" CHAR(512),
+    "last_name" CHAR(512),
+    "sso_id" CHAR(512),
+    "action_token" CHAR(512),
+    "last_password_change" TIMESTAMP,
+    "past_passwords_hash" TEXT
+);
+success!
+timestamp: 2021-05-13T00:00:49.371913
+CREATE TABLE "auth_user_tag_groups"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "path" CHAR(512),
+    "record_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2021-05-14T19:15:42.316227
+CREATE TABLE "user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(512),
+    "last_name" CHAR(512)
+);
+success!
+timestamp: 2021-05-17T23:43:59.742901
+CREATE TABLE "post"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(512),
+    "last_name" CHAR(512),
+    "post_content" CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-05-19T00:42:40.630204
+ALTER TABLE "user" ADD "full_name" CHAR(512);
+success!
+timestamp: 2021-05-19T00:42:40.637939
+ALTER TABLE "post" ADD "user_id" INTEGER REFERENCES "user" ("id") ON DELETE CASCADE  ;
+success!
+success!
+success!
+success!
+timestamp: 2021-05-19T01:13:38.703111
+CREATE TABLE "posts"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "user" ("id") ON DELETE CASCADE  ,
+    "post_content" CHAR(512)
+);
+success!
+timestamp: 2021-05-19T01:13:38.706836
+CREATE TABLE "thumbs"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "post" INTEGER REFERENCES "posts" ("id") ON DELETE CASCADE  
+);
+success!
+success!
+timestamp: 2021-05-19T01:21:52.746763
+ALTER TABLE "user" ADD "name" CHAR(512);
+success!
+success!
+success!
+success!
+timestamp: 2021-05-19T01:29:19.702028
+ALTER TABLE "thumbs" ADD "post_id" INTEGER REFERENCES "posts" ("id") ON DELETE CASCADE  ;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-05-19T02:03:06.116517
+ALTER TABLE "posts" ADD "user_email" CHAR(512);
+success!
+timestamp: 2021-05-19T02:03:06.122098
+CREATE TABLE "thumb"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "post_id" INTEGER REFERENCES "posts" ("id") ON DELETE CASCADE  ,
+    "rating" INTEGER
+);
+success!
+success!
+success!
+success!
+timestamp: 2021-05-19T02:08:46.636165
+CREATE TABLE "py4web_session"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "rkey" CHAR(512),
+    "rvalue" TEXT,
+    "expiration" INTEGER,
+    "created_on" TIMESTAMP,
+    "expires_on" TIMESTAMP
+);
+success!
+success!
+success!
+success!
+timestamp: 2021-05-19T11:20:49.369218
+ALTER TABLE "user" ADD "user_email" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-05-19T13:28:23.773931
+ALTER TABLE "posts" ADD "name" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-05-19T15:57:15.064445
+ALTER TABLE "thumb" ADD "rater" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-05-19T23:29:36.618507
+CREATE TABLE "thumb_up"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "post_id" INTEGER REFERENCES "posts" ("id") ON DELETE CASCADE  ,
+    "liker" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2021-05-19T23:29:36.622528
+CREATE TABLE "thumb_down"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "post_id" INTEGER REFERENCES "posts" ("id") ON DELETE CASCADE  ,
+    "liker" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-05-20T14:07:42.409052
+ALTER TABLE "thumbs" ADD "rater" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2021-05-20T14:07:42.414306
+ALTER TABLE "thumbs" ADD "posts_id" INTEGER REFERENCES "posts" ("id") ON DELETE CASCADE  ;
+timestamp: 2021-05-20T14:07:42.416533
+ALTER TABLE "thumbs" ADD "like" INTEGER;
+timestamp: 2021-05-20T14:07:42.419858
+ALTER TABLE "thumbs" ADD "dislike" INTEGER;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
